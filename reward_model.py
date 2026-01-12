@@ -121,7 +121,13 @@ def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "
         output_dir: Directory to save the trained model
     """
     print("Loading reward model + tokenizer...")
+    # Load tokenizer and store a clean copy for saving later
     tokenizer = AutoTokenizer.from_pretrained(REWARD_MODEL_NAME)
+    print(f"Loaded tokenizer type: {tokenizer.__class__.__name__}")
+    print(f"Tokenizer vocab size: {tokenizer.vocab_size}")
+    # Keep a reference to the original tokenizer before training
+    original_tokenizer_path = REWARD_MODEL_NAME
+
     base_model = AutoModelForSequenceClassification.from_pretrained(
         REWARD_MODEL_NAME,
         num_labels=1,
@@ -174,8 +180,28 @@ def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "
 
     # Save the base model (unwrapped)
     base_model.save_pretrained(output_dir)
-    tokenizer.save_pretrained(output_dir)
+
+    # Save the original tokenizer (reload fresh to avoid contamination)
+    print(f"Saving clean tokenizer from {original_tokenizer_path}...")
+    clean_tokenizer = AutoTokenizer.from_pretrained(original_tokenizer_path)
+    clean_tokenizer.save_pretrained(output_dir)
+
+    # CRITICAL: Remove any contaminating files that shouldn't be in DeBERTa tokenizer
+    import os
+    contaminating_files = [
+        "spm.model",  # SentencePiece (LLaMA/Mistral)
+        "merges.txt",  # BPE (GPT-2/Mistral)
+        "vocab.json",  # BPE vocab (GPT-2/Mistral)
+    ]
+
+    for filename in contaminating_files:
+        filepath = os.path.join(output_dir, filename)
+        if os.path.exists(filepath):
+            print(f"WARNING: Removing contaminating file: {filename}")
+            os.remove(filepath)
+
     print(f"Reward model saved to {output_dir}")
+    print(f"Tokenizer type: {clean_tokenizer.__class__.__name__}")
 
 
 def score_summaries_with_reward_model(
