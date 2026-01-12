@@ -251,6 +251,7 @@ def generate_summaries_for_papers(papers: List[PaperData], output_path: str = "s
                 "arxiv_id": paper.arxiv_id,
                 "title": paper.title,
                 "abstract": paper.abstract,
+                "text": paper.text,  # Include full text for fallback reference
                 "summary_1": s1,
                 "summary_2": s2,
             }

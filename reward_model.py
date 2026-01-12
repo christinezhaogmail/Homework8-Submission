@@ -248,25 +248,40 @@ def evaluate_summaries(
     results = []
 
     for rec in summary_records:
-        ref = rec["abstract"]
+        ref = rec.get("abstract", "")
         s1 = rec["summary_1"]
         s2 = rec["summary_2"]
 
-        # ROUGE
-        r1 = rouge.compute(predictions=[s1], references=[ref])
-        r2 = rouge.compute(predictions=[s2], references=[ref])
+        # Check if abstract is empty - if so, skip ROUGE/BERTScore or use fallback
+        if not ref or ref.strip() == "":
+            print(f"\nWarning: Empty abstract for {rec['arxiv_id']}, using first 500 chars of text as reference")
+            # Use first 500 characters of paper text as fallback reference
+            ref = rec.get("text", "")[:500] if rec.get("text") else ""
 
-        # BERTScore
-        b1 = bertscore.compute(
-            predictions=[s1],
-            references=[ref],
-            lang="en",
-        )
-        b2 = bertscore.compute(
-            predictions=[s2],
-            references=[ref],
-            lang="en",
-        )
+        # Only compute ROUGE/BERTScore if we have a valid reference
+        if ref and ref.strip():
+            # ROUGE
+            r1 = rouge.compute(predictions=[s1], references=[ref])
+            r2 = rouge.compute(predictions=[s2], references=[ref])
+
+            # BERTScore
+            b1 = bertscore.compute(
+                predictions=[s1],
+                references=[ref],
+                lang="en",
+            )
+            b2 = bertscore.compute(
+                predictions=[s2],
+                references=[ref],
+                lang="en",
+            )
+        else:
+            # No valid reference available
+            print(f"Warning: No valid reference for {rec['arxiv_id']}, skipping ROUGE/BERTScore")
+            r1 = {"rouge1": None, "rouge2": None, "rougeL": None}
+            r2 = {"rouge1": None, "rouge2": None, "rougeL": None}
+            b1 = {"precision": [None], "recall": [None], "f1": [None]}
+            b2 = {"precision": [None], "recall": [None], "f1": [None]}
 
         # Reward model scores
         scores = score_summaries_with_reward_model(
@@ -293,11 +308,15 @@ def evaluate_summaries(
 
         print("\n=== Paper", rec["arxiv_id"], "===")
         print("Reward scores: S1 =", rm1, " | S2 =", rm2)
-        print("ROUGE-L: S1 =", r1["rougeL"], " | S2 =", r2["rougeL"])
-        print("BERTScore F1: S1 =",
-              b1["f1"][0],
-              "| S2 =",
-              b2["f1"][0])
+        if r1["rougeL"] is not None:
+            print("ROUGE-L: S1 =", r1["rougeL"], " | S2 =", r2["rougeL"])
+            print("BERTScore F1: S1 =",
+                  b1["f1"][0],
+                  "| S2 =",
+                  b2["f1"][0])
+        else:
+            print("ROUGE-L: N/A (no valid reference)")
+            print("BERTScore F1: N/A (no valid reference)")
 
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)

@@ -1,0 +1,91 @@
+(hw7_311) jovyan@deployment-1066-1595-1768256363806755879-6c4775555d-2rzxt:~/Homework8-Submission$ python run_evaluation.py
+
+=== PHASE 5-6: Evaluation and comparison ===
+
+Evaluating 10 papers...
+Loading reward model for evaluation...
+The tokenizer you are loading from 'reward_model' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Reward model loaded on device: cuda
+tokenizer_config.json: 100%|██████████████████████████████████████████████████████| 25.0/25.0 [00:00<00:00, 159kB/s]
+config.json: 100%|█████████████████████████████████████████████████████████████████| 482/482 [00:00<00:00, 2.10MB/s]
+vocab.json: 100%|████████████████████████████████████████████████████████████████| 899k/899k [00:00<00:00, 10.3MB/s]
+merges.txt: 100%|████████████████████████████████████████████████████████████████| 456k/456k [00:00<00:00, 15.7MB/s]
+tokenizer.json: 100%|██████████████████████████████████████████████████████████| 1.36M/1.36M [00:00<00:00, 37.0MB/s]
+model.safetensors: 100%|████████████████████████████████████████████████████████| 1.42G/1.42G [00:02<00:00, 543MB/s]
+Some weights of RobertaModel were not initialized from the model checkpoint at roberta-large and are newly initialized: ['pooler.dense.bias', 'pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05171v1 ===
+Reward scores: S1 = 0.3592888414859772  | S2 = -0.0748400166630745
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05111v1 ===
+Reward scores: S1 = 0.3920663893222809  | S2 = 0.314544141292572
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05163v1 ===
+Reward scores: S1 = 0.36047622561454773  | S2 = 0.35817861557006836
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05104v1 ===
+Reward scores: S1 = 0.23484265804290771  | S2 = 0.007653195410966873
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05106v1 ===
+Reward scores: S1 = 0.3292021155357361  | S2 = 0.16309744119644165
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05103v1 ===
+Reward scores: S1 = 0.38123273849487305  | S2 = 0.16720984876155853
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05192v1 ===
+Reward scores: S1 = 0.32010671496391296  | S2 = 0.03587210923433304
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05143v1 ===
+Reward scores: S1 = 0.11580318957567215  | S2 = 0.005619719624519348
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05184v1 ===
+Reward scores: S1 = 0.1153610423207283  | S2 = 0.10839855670928955
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+Warning: Empty reference sentence detected; setting raw BERTScores to 0.
+
+=== Paper 2601.05167v1 ===
+Reward scores: S1 = 0.3586600422859192  | S2 = 0.2740861177444458
+ROUGE-L: S1 = 0.0  | S2 = 0.0
+BERTScore F1: S1 = 0.0 | S2 = 0.0
+
+Saved detailed evaluation results to evaluation_results.json
+You can now inspect where reward scores agree/disagree with ROUGE/BERTScore.
+
+=== Evaluation complete! ===
