@@ -15,6 +15,12 @@ Usage:
     python main.py --phase train_reward
     python main.py --phase evaluate
 """
+# Import unsloth FIRST before any other imports
+try:
+    import unsloth
+except (ImportError, NotImplementedError):
+    pass
+
 import argparse
 
 from data_utils import download_arxiv_pdfs, save_papers_to_json

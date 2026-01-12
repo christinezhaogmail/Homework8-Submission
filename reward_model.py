@@ -4,6 +4,12 @@ Reward model training and evaluation utilities.
 import json
 from typing import List, Dict, Any
 
+# Import unsloth first if available
+try:
+    import unsloth
+except (ImportError, NotImplementedError):
+    pass
+
 import torch
 from datasets import load_dataset, Dataset
 from transformers import (
@@ -147,10 +153,11 @@ def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "
         output_dir=output_dir,
         per_device_train_batch_size=REWARD_BATCH_SIZE,
         num_train_epochs=REWARD_NUM_EPOCHS,
-        evaluation_strategy="no",
+        eval_strategy="no",
         save_strategy="epoch",
         logging_steps=10,
-        fp16=torch.cuda.is_available(),
+        fp16=False,
+        bf16=torch.cuda.is_available(),
     )
 
     trainer = RewardTrainer(

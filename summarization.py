@@ -4,16 +4,17 @@ Summarization utilities using LLaMA 3.1 model with unsloth optimization.
 import json
 from typing import List, Dict, Any
 
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-
-# Try to import unsloth, fall back to standard transformers if not available
+# Try to import unsloth FIRST, before transformers
 try:
+    import unsloth
     from unsloth import FastLanguageModel
     USE_UNSLOTH = True
 except (ImportError, NotImplementedError):
     USE_UNSLOTH = False
     print("Warning: unsloth not available, using standard transformers (slower)")
+
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 from data_utils import PaperData
 

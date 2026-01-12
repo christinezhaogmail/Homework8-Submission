@@ -172,13 +172,6 @@ This will:
 - Compute ROUGE, BERTScore, and reward scores for all summaries
 - Save comprehensive results to `evaluation_results.json`
 
-### Using in Jupyter Notebook
-
-You can also run the pipeline from the provided Jupyter notebook:
-
-```bash
-jupyter notebook "Class 8 Homework.ipynb"
-```
 
 ## Pipeline Phases
 
