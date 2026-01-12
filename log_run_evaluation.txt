@@ -6,78 +6,58 @@ Evaluating 10 papers...
 Loading reward model for evaluation...
 The tokenizer you are loading from 'reward_model' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
 Reward model loaded on device: cuda
-
-Warning: Empty abstract for 2601.05171v1, using first 500 chars of text as reference
 Some weights of RobertaModel were not initialized from the model checkpoint at roberta-large and are newly initialized: ['pooler.dense.bias', 'pooler.dense.weight']
 You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
 
 === Paper 2601.05171v1 ===
-Reward scores: S1 = 0.3280594050884247  | S2 = 0.1532047986984253
-ROUGE-L: S1 = 0.11842105263157895  | S2 = 0.11842105263157895
-BERTScore F1: S1 = 0.8808956146240234 | S2 = 0.8768576979637146
-
-Warning: Empty abstract for 2601.05111v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.05399122089147568  | S2 = 0.037776581943035126
+ROUGE-L: S1 = 0.3350253807106599  | S2 = 0.285012285012285
+BERTScore F1: S1 = 0.8554288744926453 | S2 = 0.8534665107727051
 
 === Paper 2601.05111v1 ===
-Reward scores: S1 = 0.35898542404174805  | S2 = 0.3466804027557373
-ROUGE-L: S1 = 0.12846946867565423  | S2 = 0.1287758346581876
-BERTScore F1: S1 = 0.8969213366508484 | S2 = 0.8940883874893188
-
-Warning: Empty abstract for 2601.05163v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.06026603281497955  | S2 = 0.031479448080062866
+ROUGE-L: S1 = 0.4879356568364611  | S2 = 0.3979057591623037
+BERTScore F1: S1 = 0.8874909281730652 | S2 = 0.8867952823638916
 
 === Paper 2601.05163v1 ===
-Reward scores: S1 = 0.24606376886367798  | S2 = 0.21761122345924377
-ROUGE-L: S1 = 0.11290322580645161  | S2 = 0.11137629276054097
-BERTScore F1: S1 = 0.8923364877700806 | S2 = 0.8896294832229614
-
-Warning: Empty abstract for 2601.05104v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.05547890067100525  | S2 = 0.04207906872034073
+ROUGE-L: S1 = 0.36645962732919257  | S2 = 0.2568807339449541
+BERTScore F1: S1 = 0.8772771954536438 | S2 = 0.8586826920509338
 
 === Paper 2601.05104v1 ===
-Reward scores: S1 = 0.22983253002166748  | S2 = 0.09468428045511246
-ROUGE-L: S1 = 0.11320754716981132  | S2 = 0.11274509803921569
-BERTScore F1: S1 = 0.903519332408905 | S2 = 0.9023492932319641
-
-Warning: Empty abstract for 2601.05106v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.04810093343257904  | S2 = 0.05881273001432419
+ROUGE-L: S1 = 0.5531914893617021  | S2 = 0.6108108108108108
+BERTScore F1: S1 = 0.8919901251792908 | S2 = 0.9144341945648193
 
 === Paper 2601.05106v1 ===
-Reward scores: S1 = 0.3171263337135315  | S2 = 0.11300726234912872
-ROUGE-L: S1 = 0.11065907241659886  | S2 = 0.11065907241659886
-BERTScore F1: S1 = 0.8828936219215393 | S2 = 0.8820963501930237
-
-Warning: Empty abstract for 2601.05103v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.05516301840543747  | S2 = 0.03932102769613266
+ROUGE-L: S1 = 0.27941176470588236  | S2 = 0.12781954887218047
+BERTScore F1: S1 = 0.8489883542060852 | S2 = 0.8219152092933655
 
 === Paper 2601.05103v1 ===
-Reward scores: S1 = 0.3902151882648468  | S2 = 0.2552872598171234
-ROUGE-L: S1 = 0.11564625850340135  | S2 = 0.11390284757118929
-BERTScore F1: S1 = 0.8902130126953125 | S2 = 0.8907598853111267
-
-Warning: Empty abstract for 2601.05192v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.03621529042720795  | S2 = 0.048594653606414795
+ROUGE-L: S1 = 0.18450184501845018  | S2 = 0.1925925925925926
+BERTScore F1: S1 = 0.8260022401809692 | S2 = 0.8231779336929321
 
 === Paper 2601.05192v1 ===
-Reward scores: S1 = 0.28153371810913086  | S2 = 0.26640135049819946
-ROUGE-L: S1 = 0.11432926829268293  | S2 = 0.11286681715575621
-BERTScore F1: S1 = 0.8956850171089172 | S2 = 0.8944375514984131
-
-Warning: Empty abstract for 2601.05143v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.05669626593589783  | S2 = 0.03228475898504257
+ROUGE-L: S1 = 0.25  | S2 = 0.21160409556313994
+BERTScore F1: S1 = 0.842767596244812 | S2 = 0.840757429599762
 
 === Paper 2601.05143v1 ===
-Reward scores: S1 = 0.15516769886016846  | S2 = -0.24517911672592163
-ROUGE-L: S1 = 0.10900082576383155  | S2 = 0.10696920583468396
-BERTScore F1: S1 = 0.881723940372467 | S2 = 0.8799099326133728
-
-Warning: Empty abstract for 2601.05184v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.042943716049194336  | S2 = 0.05755064636468887
+ROUGE-L: S1 = 0.3966480446927374  | S2 = 0.484149855907781
+BERTScore F1: S1 = 0.8710131645202637 | S2 = 0.8946103453636169
 
 === Paper 2601.05184v1 ===
-Reward scores: S1 = 0.28251758217811584  | S2 = 0.00574682280421257
-ROUGE-L: S1 = 0.11532625189681336  | S2 = 0.11576542269611577
-BERTScore F1: S1 = 0.8719285130500793 | S2 = 0.8697225451469421
-
-Warning: Empty abstract for 2601.05167v1, using first 500 chars of text as reference
+Reward scores: S1 = 0.03804745525121689  | S2 = 0.0606839656829834
+ROUGE-L: S1 = 0.42990654205607476  | S2 = 0.46335697399527187
+BERTScore F1: S1 = 0.8848257064819336 | S2 = 0.8704691529273987
 
 === Paper 2601.05167v1 ===
-Reward scores: S1 = 0.3609303832054138  | S2 = 0.28743231296539307
-ROUGE-L: S1 = 0.10428015564202335  | S2 = 0.1035548686244204
-BERTScore F1: S1 = 0.8891361951828003 | S2 = 0.887340247631073
+Reward scores: S1 = 0.03830834478139877  | S2 = 0.053227558732032776
+ROUGE-L: S1 = 0.46115288220551376  | S2 = 0.5503685503685503
+BERTScore F1: S1 = 0.8741124272346497 | S2 = 0.9040818214416504
 
 Saved detailed evaluation results to evaluation_results.json
 You can now inspect where reward scores agree/disagree with ROUGE/BERTScore.

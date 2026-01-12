@@ -9,6 +9,7 @@ This script:
 """
 import os
 import glob
+import re
 
 from data_utils import (
     download_arxiv_pdfs,
@@ -18,6 +19,42 @@ from data_utils import (
 )
 from summarization import generate_summaries_for_papers
 from reward_model import auto_label_preferences_with_rouge
+
+
+def extract_abstract_from_text(text: str) -> str:
+    """
+    Extract the abstract from paper text.
+
+    Looks for text between "Abstract" and common section headers.
+
+    Args:
+        text: Full paper text
+
+    Returns:
+        Extracted abstract or first 500 chars if not found
+    """
+    # Common patterns for abstract section
+    abstract_patterns = [
+        r'Abstract\s*\n+(.*?)\n+(?:1\.|Introduction|Keywords|1\s+Introduction)',
+        r'ABSTRACT\s*\n+(.*?)\n+(?:1\.|Introduction|Keywords|1\s+Introduction)',
+        r'Abstract\s*[:\-]?\s*\n+(.*?)\n+\d+\.?\s*[A-Z]',  # Abstract followed by numbered section
+    ]
+
+    for pattern in abstract_patterns:
+        match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+        if match:
+            abstract = match.group(1).strip()
+            # Clean up: remove excessive whitespace
+            abstract = re.sub(r'\s+', ' ', abstract)
+            # Limit length to reasonable abstract size
+            if len(abstract) > 100 and len(abstract) < 3000:
+                return abstract
+
+    # Fallback: use first 500 characters after skipping potential title
+    lines = text.split('\n')
+    # Skip first few lines (likely title/authors)
+    text_start = '\n'.join(lines[5:]) if len(lines) > 5 else text
+    return text_start[:500].strip()
 
 
 # Configuration
@@ -49,15 +86,20 @@ def main():
         for pdf_path in pdf_files:
             arxiv_id = os.path.basename(pdf_path).replace(".pdf", "")
             text, figure_captions = extract_text_and_figures(pdf_path)
+
+            # Extract abstract from the paper text
+            abstract = extract_abstract_from_text(text)
+
             train_papers.append(
                 PaperData(
                     arxiv_id=arxiv_id,
                     title=f"Paper {arxiv_id}",
-                    abstract="",
+                    abstract=abstract,
                     text=text,
                     figure_captions=figure_captions,
                 )
             )
+            print(f"  Extracted abstract for {arxiv_id}: {len(abstract)} chars")
         save_papers_to_json(train_papers, TRAIN_META_JSON)
 
     # Generate summaries
