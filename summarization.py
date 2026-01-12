@@ -198,12 +198,10 @@ def llama_generate_summary(
             pad_token_id=tokenizer.eos_token_id,
         )
 
-    decoded = tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
-    # Extract only the generated summary (remove the prompt)
-    if prompt in decoded:
-        summary = decoded.replace(prompt, "").strip()
-    else:
-        summary = decoded.strip()
+    # Only decode the newly generated tokens (not the input prompt)
+    input_length = inputs.input_ids.shape[1]
+    generated_tokens = outputs[0][input_length:]
+    summary = tokenizer.decode(generated_tokens, skip_special_tokens=True).strip()
 
     return summary
 
