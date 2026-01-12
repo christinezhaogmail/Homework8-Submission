@@ -1,0 +1,186 @@
+(hw7_311) jovyan@deployment-1066-1595-1768240665127648039-57474b8d64-gfhjg:~/Homework8-Submission$ python main.py --phase build_data
+/home/jovyan/Homework8-Submission/summarization.py:12: UserWarning: WARNING: Unsloth should be imported before [transformers] to ensure all optimizations are applied. Your code may run slower or encounter memory issues without these optimizations.
+
+Please restructure your imports with 'import unsloth' at the top of your file.
+  from unsloth import FastLanguageModel
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+🦥 Unsloth Zoo will now patch everything to make training faster!
+=== PHASE 1-3: Data collection, summarization, preference dataset ===
+
+Using existing PDFs from data/pdfs
+Found 10 PDF files
+
+Generating summaries for training papers...
+Loading LLaMA model with unsloth: unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit
+==((====))==  Unsloth 2026.1.2: Fast Llama patching. Transformers: 4.57.3.
+   \\   /|    inference-ai GPU cuda. Num GPUs = 1. Max memory: 15.836 GB. Platform: Linux.
+O^O/ \_/ \    Torch: 2.9.1+cu128. CUDA: 8.6. CUDA Toolkit: 12.8. Triton: 3.5.1
+\        /    Bfloat16 = TRUE. FA [Xformers = 0.0.33.post2. FA2 = False]
+ "-____-"     Free license: http://github.com/unslothai/unsloth
+Unsloth: Fast downloading is enabled - ignore downloading bars which are red colored!
+
+=== Summarizing paper 1/10: 2601.05171v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 2/10: 2601.05111v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 3/10: 2601.05163v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 4/10: 2601.05104v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 5/10: 2601.05106v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 6/10: 2601.05103v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 7/10: 2601.05192v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 8/10: 2601.05143v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 9/10: 2601.05184v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+=== Summarizing paper 10/10: 2601.05167v1 ===
+Summary 1 (generic): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper clearly and concisely for a graduate student.user
+
+S ...
+Summary 2 (figure-aware): system
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+You are an expert research assistant. Summarize the following research paper, explicitly incorporating the information conveyed b ...
+
+Building reward modeling dataset via ROUGE-based preference labels...
+Downloading builder script: 6.14kB [00:00, 7.28MB/s]
+Wrote preference data to reward_data.jsonl (10 pairs).
+
+=== Pipeline complete! ===

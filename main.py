@@ -15,21 +15,9 @@ Usage:
     python main.py --phase train_reward
     python main.py --phase evaluate
 """
-# Import unsloth FIRST before any other imports
-try:
-    import unsloth
-except (ImportError, NotImplementedError):
-    pass
-
 import argparse
 
 from data_utils import download_arxiv_pdfs, save_papers_to_json
-from summarization import generate_summaries_for_papers
-from reward_model import (
-    auto_label_preferences_with_rouge,
-    train_reward_model,
-    evaluate_summaries,
-)
 
 
 # Configuration
@@ -94,10 +82,12 @@ def build_data_phase():
 
     # Generate summaries
     print("\nGenerating summaries for training papers...")
+    from summarization import generate_summaries_for_papers
     summary_records = generate_summaries_for_papers(train_papers, TRAIN_SUMMARY_JSON)
 
     # Build reward modeling data with chosen/rejected labels
     print("\nBuilding reward modeling dataset via ROUGE-based preference labels...")
+    from reward_model import auto_label_preferences_with_rouge
     auto_label_preferences_with_rouge(summary_records, REWARD_JSONL)
 
 
@@ -109,6 +99,7 @@ def train_reward_phase():
     so it learns to assign higher scores to better summaries.
     """
     print("\n=== PHASE 4: Reward model training ===\n")
+    from reward_model import train_reward_model
     train_reward_model(REWARD_JSONL, REWARD_MODEL_DIR)
 
 
@@ -141,6 +132,7 @@ def evaluate_phase():
     print(f"Evaluating {len(eval_summaries)} papers...")
 
     # Evaluate summaries
+    from reward_model import evaluate_summaries
     evaluate_summaries(eval_summaries, REWARD_MODEL_DIR, RESULTS_JSON)
 
 

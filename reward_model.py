@@ -4,12 +4,6 @@ Reward model training and evaluation utilities.
 import json
 from typing import List, Dict, Any
 
-# Import unsloth first if available
-try:
-    import unsloth
-except (ImportError, NotImplementedError):
-    pass
-
 import torch
 from datasets import load_dataset, Dataset
 from transformers import (
@@ -97,6 +91,24 @@ def load_reward_dataset(path: str) -> Dataset:
     return dataset
 
 
+class ModelWrapper(torch.nn.Module):
+    """Wrapper to filter out unsupported arguments for encoder models."""
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+
+    def forward(self, **kwargs):
+        # Remove arguments not supported by encoder models
+        kwargs.pop('use_cache', None)
+        return self.model(**kwargs)
+
+    def __getattr__(self, name):
+        try:
+            return super().__getattr__(name)
+        except AttributeError:
+            return getattr(self.model, name)
+
+
 def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "reward_model"):
     """
     Train a reward model on preference data using TRL's RewardTrainer.
@@ -110,44 +122,21 @@ def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "
     """
     print("Loading reward model + tokenizer...")
     tokenizer = AutoTokenizer.from_pretrained(REWARD_MODEL_NAME)
-    model = AutoModelForSequenceClassification.from_pretrained(
+    base_model = AutoModelForSequenceClassification.from_pretrained(
         REWARD_MODEL_NAME,
         num_labels=1,
     )
 
+    # Wrap model to filter unsupported arguments
+    model = ModelWrapper(base_model)
+
     dataset = load_reward_dataset(data_path)
+    print(f"Loaded dataset with {len(dataset)} examples")
+    print(f"Dataset columns: {dataset.column_names}")
+    if len(dataset) > 0:
+        print(f"First example: {dataset[0]}")
 
-    def preprocess(examples):
-        """Tokenize chosen and rejected summaries separately."""
-        new_examples = {
-            "input_ids_chosen": [],
-            "attention_mask_chosen": [],
-            "input_ids_rejected": [],
-            "attention_mask_rejected": [],
-        }
-
-        for chosen, rejected in zip(examples["chosen"], examples["rejected"]):
-            tok_chosen = tokenizer(
-                chosen,
-                truncation=True,
-                padding="max_length",
-                max_length=512,
-            )
-            tok_rejected = tokenizer(
-                rejected,
-                truncation=True,
-                padding="max_length",
-                max_length=512,
-            )
-
-            new_examples["input_ids_chosen"].append(tok_chosen["input_ids"])
-            new_examples["attention_mask_chosen"].append(tok_chosen["attention_mask"])
-            new_examples["input_ids_rejected"].append(tok_rejected["input_ids"])
-            new_examples["attention_mask_rejected"].append(tok_rejected["attention_mask"])
-
-        return new_examples
-
-    dataset = dataset.map(preprocess, batched=True, remove_columns=dataset.column_names)
+    # RewardTrainer handles tokenization internally, so we just pass the text fields
 
     training_args = TrainingArguments(
         output_dir=output_dir,
@@ -158,17 +147,33 @@ def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "
         logging_steps=10,
         fp16=False,
         bf16=torch.cuda.is_available(),
+        remove_unused_columns=False,
     )
+
+    # Add attributes required by TRL RewardTrainer (from RewardConfig)
+    training_args.model_init_kwargs = {}
+    training_args.eos_token = None
+    training_args.pad_token = None
+    training_args.max_length = 4096
+    training_args.chat_template_path = None
+    training_args.disable_dropout = False
+    training_args.pad_to_multiple_of = None
+    training_args.dataset_num_proc = None
+    training_args.center_rewards_coefficient = None
+    training_args.activation_offloading = False
 
     trainer = RewardTrainer(
         model=model,
         args=training_args,
         train_dataset=dataset,
+        processing_class=tokenizer,
     )
 
     print("Training reward model...")
     trainer.train()
-    trainer.save_model(output_dir)
+
+    # Save the base model (unwrapped)
+    base_model.save_pretrained(output_dir)
     tokenizer.save_pretrained(output_dir)
     print(f"Reward model saved to {output_dir}")
 
@@ -201,7 +206,7 @@ def score_summaries_with_reward_model(
             return_tensors="pt",
             truncation=True,
             padding="max_length",
-            max_length=512,
+            max_length=4096,
         ).to(model_device)
 
         with torch.no_grad():

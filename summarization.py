@@ -32,7 +32,7 @@ elif torch.backends.mps.is_available():
 else:
     LLAMA_DEVICE = "cpu"
 
-MAX_INPUT_TOKENS = 2048
+MAX_INPUT_TOKENS = 4096
 MAX_NEW_TOKENS = 256
 
 
