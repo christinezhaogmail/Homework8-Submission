@@ -183,11 +183,56 @@ def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "
 
     # Save the original tokenizer (reload fresh to avoid contamination)
     print(f"Saving clean tokenizer from {original_tokenizer_path}...")
-    clean_tokenizer = AutoTokenizer.from_pretrained(original_tokenizer_path)
-    clean_tokenizer.save_pretrained(output_dir)
+    import os
+    import shutil
+
+    # Use a temporary directory to get clean tokenizer files
+    temp_dir = f"{output_dir}_temp_tokenizer"
+    os.makedirs(temp_dir, exist_ok=True)
+
+    # Download fresh tokenizer to temp directory
+    clean_tokenizer = AutoTokenizer.from_pretrained(original_tokenizer_path, cache_dir=temp_dir)
+
+    # Save to temp first
+    clean_tokenizer.save_pretrained(temp_dir)
+
+    # Copy only the essential tokenizer files (not any contaminated metadata)
+    essential_files = [
+        "tokenizer_config.json",
+        "vocab.txt",  # DeBERTa uses vocab.txt
+        "special_tokens_map.json",
+        "tokenizer.json",
+    ]
+
+    for filename in essential_files:
+        src = os.path.join(temp_dir, filename)
+        dst = os.path.join(output_dir, filename)
+        if os.path.exists(src):
+            shutil.copy2(src, dst)
+            print(f"  Copied: {filename}")
+
+    # Clean up temp directory
+    shutil.rmtree(temp_dir, ignore_errors=True)
+
+    # CRITICAL FIX: Clean up tokenizer_config.json to remove SentencePiece contamination
+    tokenizer_config_path = os.path.join(output_dir, "tokenizer_config.json")
+    if os.path.exists(tokenizer_config_path):
+        print("Cleaning tokenizer_config.json to remove SentencePiece contamination...")
+        with open(tokenizer_config_path, 'r') as f:
+            config = json.load(f)
+
+        # Remove SentencePiece-related fields that cause Mistral warnings
+        contaminated_fields = ["vocab_type", "sp_model_kwargs"]
+        for field in contaminated_fields:
+            if field in config:
+                print(f"  Removing contaminated field: {field} = {config[field]}")
+                del config[field]
+
+        # Write back the cleaned config
+        with open(tokenizer_config_path, 'w') as f:
+            json.dump(config, f, indent=2)
 
     # CRITICAL: Remove any contaminating files that shouldn't be in DeBERTa tokenizer
-    import os
     contaminating_files = [
         "spm.model",  # SentencePiece (LLaMA/Mistral)
         "merges.txt",  # BPE (GPT-2/Mistral)
@@ -202,6 +247,11 @@ def train_reward_model(data_path: str = "reward_data.jsonl", output_dir: str = "
 
     print(f"Reward model saved to {output_dir}")
     print(f"Tokenizer type: {clean_tokenizer.__class__.__name__}")
+
+    # Verify the saved tokenizer can be loaded correctly
+    print("Verifying saved tokenizer...")
+    verification_tokenizer = AutoTokenizer.from_pretrained(output_dir)
+    print(f"Verified tokenizer type: {verification_tokenizer.__class__.__name__}")
 
 
 def score_summaries_with_reward_model(
