@@ -312,10 +312,50 @@ def evaluate_summaries(
     """
     # Load reward model
     print("Loading reward model for evaluation...")
-    reward_tokenizer = AutoTokenizer.from_pretrained(reward_model_dir)
-    reward_model = AutoModelForSequenceClassification.from_pretrained(reward_model_dir)
+
+    # Suppress false Mistral warnings by cleaning tokenizer config before loading
+    import os
+    tokenizer_config_path = os.path.join(reward_model_dir, "tokenizer_config.json")
+    if os.path.exists(tokenizer_config_path):
+        with open(tokenizer_config_path, 'r') as f:
+            config = json.load(f)
+
+        # Remove SentencePiece contamination if present
+        if "vocab_type" in config or "sp_model_kwargs" in config:
+            print("Cleaning tokenizer config before loading...")
+            config.pop("vocab_type", None)
+            config.pop("sp_model_kwargs", None)
+
+            with open(tokenizer_config_path, 'w') as f:
+                json.dump(config, f, indent=2)
+
+    # Suppress the false Mistral warning from transformers logger
+    import logging
+    import warnings
+
+    # Temporarily suppress ALL transformers warnings during tokenizer load
+    logging.getLogger("transformers").setLevel(logging.ERROR)
+    original_transformers_level = logging.getLogger("transformers.tokenization_utils_base").level
+    logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*incorrect regex pattern.*")
+        warnings.filterwarnings("ignore", message=".*Mistral.*")
+
+        reward_tokenizer = AutoTokenizer.from_pretrained(
+            reward_model_dir,
+            trust_remote_code=False,
+            use_fast=True
+        )
+        reward_model = AutoModelForSequenceClassification.from_pretrained(reward_model_dir)
+
+    # Restore original logging levels
+    logging.getLogger("transformers.tokenization_utils_base").setLevel(original_transformers_level)
+    logging.getLogger("transformers").setLevel(logging.WARNING)
+
     reward_model.to(LLAMA_DEVICE)
     print(f"Reward model loaded on device: {LLAMA_DEVICE}")
+    print(f"Loaded tokenizer class: {reward_tokenizer.__class__.__name__}")
 
     # Load evaluation metrics
     rouge = evaluate.load("rouge")

@@ -5,17 +5,67 @@
 Loading reward model + tokenizer...
 /home/jovyan/miniconda3/envs/hw7_311/lib/python3.11/site-packages/transformers/convert_slow_tokenizer.py:566: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
   warnings.warn(
+Loaded tokenizer type: DebertaV2TokenizerFast
+Tokenizer vocab size: 128000
 Some weights of DebertaV2ForSequenceClassification were not initialized from the model checkpoint at microsoft/deberta-v3-base and are newly initialized: ['classifier.bias', 'classifier.weight', 'pooler.dense.bias', 'pooler.dense.weight']
 You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
 Loaded dataset with 10 examples
 Dataset columns: ['chosen', 'rejected']
 First example: {'chosen': "Here is a clear and concise summary of the research paper:\n\n**Title:** Inside Out: Evolving User-Centric Core Memory Trees for Long-Term Personalized Dialogue Systems\n\n**Problem Statement:** Long-term personalized dialogue systems struggle to reconcile unbounded interaction streams with finite context constraints, leading to memory noise accumulation, reasoning degradation, and persona inconsistency.\n\n**Proposed Solution:** The authors propose the Inside Out framework, which utilizes a globally maintained PersonaTree as the carrier of long-term user profiling. The PersonaTree is a hierarchical structure that constrains the trunk with an initial schema and updates the branches and leaves through a reinforcement learning (RL) strategy.\n\n**Key Components:**\n\n1. **PersonaTree:** A hierarchical structure that represents the user's core memories, with three core dimensions (Biopsychosocial model).\n2. **Schema:** An initial structure of the user PersonaTree, established through interdisciplinary design.\n3. **MemListener:** A lightweight model trained through RL to compress a continuous stream of unstructured dialogue into standardized tree-structured operations.\n4. **Tree-Update Mechanism:** An iterative process that updates the PersonaTree based on user interactions.\n\n**Benefits:** The Inside Out framework enables controllable growth, achieves memory compression while preserving consistency, and supports the dynamic evolution", 'rejected': "Here is a summary of the research paper excerpt, incorporating the information conveyed by the figures and their captions:\n\n**Background:**\nThe authors propose a novel framework, Inside Out, to address the challenges of long-term personalized dialogue systems. These systems struggle to reconcile unbounded interaction streams with finite context constraints, leading to memory noise accumulation, reasoning degradation, and persona inconsistency. Existing approaches, such as explicit profile augmentation and vector-based retrieval, fail to directly confront the central bottleneck of personalized memory evolution.\n\n**Inside Out Framework:**\nThe Inside Out framework utilizes a globally maintained PersonaTree as the carrier of long-term user profiling. The PersonaTree is constructed using a hierarchical Schema based on the Biopsychosocial model, which decomposes user characteristics into three core dimensions. This Schema design establishes the initial structure of the user PersonaTree.\n\n**MemListener:**\nTo endow the system with dynamic evolution, the authors propose an iterative tree-update mechanism and introduce a reinforcement learning (RL) strategy based on process rewards to train a lightweight model, MemListener. This model learns to compress a continuous stream of unstructured dialogue in real time into standardized tree-structured operations.\n\n**Key Features:**\n\n1. **PersonaTree:** A globally maintained tree that captures the user's long-term profile, with"}
 You passed `model_init_kwargs` to the `RewardConfig`, but your model is already instantiated. The `model_init_kwargs` will be ignored.
-Filtering train >4096 tokens: 100%|████████████████████████████████████████| 10/10 [00:00<00:00, 1565.92 examples/s]
+Filtering train >4096 tokens: 100%|████████████████████████████████████████| 10/10 [00:00<00:00, 1683.85 examples/s]
 Training reward model...
 The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'eos_token_id': 2, 'bos_token_id': 1}.
-{'train_runtime': 12.8779, 'train_samples_per_second': 2.33, 'train_steps_per_second': 0.699, 'train_loss': 0.6997740003797743, 'num_tokens': 16299.0, 'min_reward': -0.024373372395833332, 'mean_reward': 0.04333919949001736, 'max_reward': 0.10316297743055555, 'accuracy': 0.4444444444444444, 'margin': -0.01187896728515625, 'epoch': 3.0}
-100%|█████████████████████████████████████████████████████████████████████████████████| 9/9 [00:12<00:00,  1.43s/it]
+{'train_runtime': 12.6382, 'train_samples_per_second': 2.374, 'train_steps_per_second': 0.712, 'train_loss': 0.6904306411743164, 'num_tokens': 16299.0, 'min_reward': -0.10637749565972222, 'mean_reward': -0.03328132629394531, 'max_reward': 0.029715643988715276, 'accuracy': 0.4722222222222222, 'margin': 0.007103390163845486, 'epoch': 3.0}
+100%|█████████████████████████████████████████████████████████████████████████████████| 9/9 [00:12<00:00,  1.40s/it]
+Saving clean tokenizer from microsoft/deberta-v3-base...
+tokenizer_config.json: 100%|██████████████████████████████████████████████████████| 52.0/52.0 [00:00<00:00, 421kB/s]
+config.json: 100%|█████████████████████████████████████████████████████████████████| 579/579 [00:00<00:00, 3.59MB/s]
+spm.model: 100%|███████████████████████████████████████████████████████████████| 2.46M/2.46M [00:00<00:00, 4.20MB/s]
+/home/jovyan/miniconda3/envs/hw7_311/lib/python3.11/site-packages/transformers/convert_slow_tokenizer.py:566: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+  Copied: tokenizer_config.json
+  Copied: special_tokens_map.json
+  Copied: tokenizer.json
+Cleaning tokenizer_config.json to remove SentencePiece contamination...
+  Removing contaminated field: vocab_type = spm
+  Removing contaminated field: sp_model_kwargs = {}
 Reward model saved to reward_model
+Tokenizer type: DebertaV2TokenizerFast
+Verifying saved tokenizer...
+The tokenizer you are loading from 'reward_model' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Verified tokenizer type: DebertaV2TokenizerFast
 
 === Training complete! ===
+(hw7_311) jovyan@deployment-1066-1595-1768256363806755879-6c4775555d-2rzxt:~/Homework8-Submission$ cat reward_model/config.json | head -20
+{
+  "architectures": [
+    "DebertaV2ForSequenceClassification"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 1,
+  "dtype": "float32",
+  "eos_token_id": 2,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "label2id": {
+    "LABEL_0": 0
+  },
+  "layer_norm_eps": 1e-07,
+(hw7_311) jovyan@deployment-1066-1595-1768256363806755879-6c4775555d-2rzxt:~/Homework8-Submission$ ls -lh reward_model/
+total 712M
+-rw-rw-rw- 1 jovyan jovyan 1.3K Jan 12 16:23 README.md
+drwxrwxrwx 2 jovyan jovyan 4.0K Jan 12 16:23 checkpoint-3
+drwxrwxrwx 2 jovyan jovyan 4.0K Jan 12 16:23 checkpoint-6
+drwxrwxrwx 2 jovyan jovyan 4.0K Jan 12 16:23 checkpoint-9
+-rw-rw-rw- 1 jovyan jovyan  964 Jan 12 16:23 config.json
+-rw-rw-rw- 1 jovyan jovyan 704M Jan 12 16:23 model.safetensors
+-rw-rw-rw- 1 jovyan jovyan  286 Jan 12 16:23 special_tokens_map.json
+-rw-rw-rw- 1 jovyan jovyan 8.3M Jan 12 16:23 tokenizer.json
+-rw-rw-rw- 1 jovyan jovyan 1.3K Jan 12 16:23 tokenizer_config.json
