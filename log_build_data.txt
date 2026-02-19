@@ -1,0 +1,110 @@
+(hw7_311) jovyan@deployment-1066-1595-1768256363806755879-6c4775555d-2rzxt:~/Homework8-Submission$ python build_data.py
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+🦥 Unsloth Zoo will now patch everything to make training faster!
+=== PHASE 1-3: Data collection, summarization, preference dataset ===
+
+Using existing PDFs from data/pdfs
+Found 10 PDF files
+  Extracted abstract for 2601.05171v1: 1546 chars
+  Extracted abstract for 2601.05111v1: 1288 chars
+  Extracted abstract for 2601.05163v1: 884 chars
+  Extracted abstract for 2601.05104v1: 1280 chars
+  Extracted abstract for 2601.05106v1: 500 chars
+  Extracted abstract for 2601.05103v1: 500 chars
+  Extracted abstract for 2601.05192v1: 606 chars
+  Extracted abstract for 2601.05143v1: 1140 chars
+  Extracted abstract for 2601.05184v1: 1471 chars
+  Extracted abstract for 2601.05167v1: 1414 chars
+
+Generating summaries for training papers...
+Loading LLaMA model with unsloth: unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit
+==((====))==  Unsloth 2026.1.2: Fast Llama patching. Transformers: 4.57.3.
+   \\   /|    inference-ai GPU cuda. Num GPUs = 1. Max memory: 47.988 GB. Platform: Linux.
+O^O/ \_/ \    Torch: 2.9.1+cu128. CUDA: 8.6. CUDA Toolkit: 12.8. Triton: 3.5.1
+\        /    Bfloat16 = TRUE. FA [Xformers = 0.0.33.post2. FA2 = False]
+ "-____-"     Free license: http://github.com/unslothai/unsloth
+Unsloth: Fast downloading is enabled - ignore downloading bars which are red colored!
+
+=== Summarizing paper 1/10: 2601.05171v1 ===
+Summary 1 (generic): Here is a clear and concise summary of the research paper:
+
+**Title:** Inside Out: Evolving User-Centric Core Memory Trees for Long-Term Personalized Dialogue Systems
+
+**Problem Statement:** Long-term ...
+Summary 2 (figure-aware): Here is a summary of the research paper excerpt, incorporating the information conveyed by the figures and their captions:
+
+**Background:**
+The authors propose a novel framework, Inside Out, to addres ...
+
+=== Summarizing paper 2/10: 2601.05111v1 ===
+Summary 1 (generic): Here is a clear and concise summary of the research paper for a graduate student:
+
+**Title:** A Survey on Agent-as-a-Judge
+
+**Background:** The rapid advancement of Large Language Models (LLMs) has re ...
+Summary 2 (figure-aware): The research paper discusses the evolution of AI evaluation systems from Large Language Models (LLM)-as-a-Judge to Agent-as-a-Judge. The authors identify the limitations of LLM-as-a-Judge, which inclu ...
+
+=== Summarizing paper 3/10: 2601.05163v1 ===
+Summary 1 (generic): The paper introduces DocDancer, an end-to-end trained open-source Doc agent for Document Question Answering (DocQA). The authors formulate DocQA as an information-seeking problem and propose a tool-dr ...
+Summary 2 (figure-aware): The paper "DocDancer: Towards Agentic Document-Grounded Information Seeking" proposes a novel approach to document question answering (DocQA) that focuses on information-seeking principles and utilize ...
+
+=== Summarizing paper 4/10: 2601.05104v1 ===
+Summary 1 (generic): Here is a clear and concise summary of the research paper for a graduate student:
+
+**Title:** Examining the Impact of Emotional Prompts on Artificial and Human Responsiveness
+
+**Research Question:** D ...
+Summary 2 (figure-aware): The research paper "Examining the Impact of Emotional Prompts on Artificial and Human Responsiveness" explores the effect of emotional tone on human-AI interactions, specifically with the large langua ...
+
+=== Summarizing paper 5/10: 2601.05106v1 ===
+Summary 1 (generic): Here's a clear and concise summary of the research paper for a graduate student:
+
+**Title:** FusionRoute: A Robust and Effective Token-Level Multi-LLM Collaboration Framework
+
+**Background:** Large La ...
+Summary 2 (figure-aware): The research paper "Paper 2601.05106v1" proposes a new framework called FusionRoute for achieving strong performance across diverse domains with a single general-purpose model, while remaining efficie ...
+
+=== Summarizing paper 6/10: 2601.05103v1 ===
+Summary 1 (generic): Here is a clear and concise summary of the research paper for a graduate student:
+
+**Title:** Semantically Orthogonal Framework for Citation Classification: Disentangling Intent and Content
+
+**Authors ...
+Summary 2 (figure-aware): The paper "Semantically Orthogonal Framework for Citation Classification: Disentangling Intent and Content" proposes a new annotation framework, SOFT, that explicitly separates citation intent (why a  ...
+
+=== Summarizing paper 7/10: 2601.05192v1 ===
+Summary 1 (generic): Here is a clear and concise summary of the research paper for a graduate student:
+
+**Title:** LELA: an LLM-based Entity Linking Approach with Zero-Shot Domain Adaptation
+
+**Background:** Entity linkin ...
+Summary 2 (figure-aware): The paper proposes a novel entity linking approach, called LELA, which stands for Large Language Model-based Entity Linking Approach with Zero-Shot Domain Adaptation. Entity linking is the task of map ...
+
+=== Summarizing paper 8/10: 2601.05143v1 ===
+Summary 1 (generic): Here is a clear and concise summary of the research paper for a graduate student:
+
+**Title:** A Lightweight and Explainable Vision–Language Framework for Crop Disease Visual Question Answering
+
+**Back ...
+Summary 2 (figure-aware): The research paper presents a lightweight vision-language framework for crop and disease identification from leaf images. The proposed approach combines a Swin Transformer vision encoder with sequence ...
+
+=== Summarizing paper 9/10: 2601.05184v1 ===
+Summary 1 (generic): The research paper "Self-Consuming Performative Loop for Large Language Models" explores the concept of a self-consuming performative loop (SCPL) in large language models (LLMs). The authors introduce ...
+Summary 2 (figure-aware): This summary is based on the provided research paper excerpt, focusing on the concept of Self-Consuming Performative Loop (SCPL) in Large Language Models (LLMs).
+
+**Introduction**
+
+The paper highlight ...
+
+=== Summarizing paper 10/10: 2601.05167v1 ===
+Summary 1 (generic): Here's a clear and concise summary of the research paper:
+
+**Title:** RelayLLM: Efficient Reasoning via Collaborative Decoding
+
+**Problem Statement:** Large Language Models (LLMs) are powerful but com ...
+Summary 2 (figure-aware): The research paper "RelayLLM: Efficient Reasoning via Collaborative Decoding" proposes a novel framework for efficient reasoning via token-level collaborative decoding. The authors address the challen ...
+
+Building reward modeling dataset via ROUGE-based preference labels...
+Wrote preference data to reward_data.jsonl (10 pairs).
+
+=== Data preparation complete! ===
